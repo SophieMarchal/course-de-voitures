@@ -1,6 +1,7 @@
 namespace SpriteKind {
     export const Obstacle = SpriteKind.create()
     export const test = SpriteKind.create()
+    export const fin = SpriteKind.create()
 }
 namespace myTiles {
     //% blockIdentity=images._tile
@@ -155,6 +156,76 @@ b b b b b b b b b b b b b b b b
 b b b b b b b b b b b b b b b b 
 b b b b b b b b b b b b b b b b 
 `
+}
+function sucette () {
+    Sucette_col = Math.randomRange(0, 15)
+    sucette_row = Math.randomRange(2, 45)
+    tiles.placeOnTile(sprites.create(sprites.food.bigIceCream, SpriteKind.Food), tiles.getTileLocation(Sucette_col, sucette_row))
+}
+function arrivee (colonne: number) {
+    tiles.placeOnTile(sprites.create(img`
+. . . . . . . . . . . . 3 3 3 3 
+. . . . . . . . . . . . 3 3 3 3 
+. . . . . . . . . . . . 3 3 3 3 
+. . . . . . . . . . . . 3 3 3 3 
+. . . . . . . . . . . . 1 1 1 1 
+. . . . . . . . . . . . 1 1 1 1 
+. . . . . . . . . . . . 1 1 1 1 
+. . . . . . . . . . . . 1 1 1 1 
+. . . . . . . . . . . . 3 3 3 3 
+. . . . . . . . . . . . 3 3 3 3 
+. . . . . . . . . . . . 3 3 3 3 
+. . . . . . . . . . . . 3 3 3 3 
+. . . . . . . . . . . . 1 1 1 1 
+. . . . . . . . . . . . 1 1 1 1 
+. . . . . . . . . . . . 1 1 1 1 
+. . . . . . . . . . . . 1 1 1 1 
+`, SpriteKind.fin), tiles.getTileLocation(colonne, 48))
+}
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (bouttons == 0) {
+        Joueur = Machandelle
+        bouttons += 1
+        Vanellope.destroy()
+        Jouer()
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    controller.moveSprite(sprite, 500, 500)
+    otherSprite.destroy(effects.confetti, 500)
+    pause(1000)
+    controller.moveSprite(sprite, 100, 100)
+})
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (bouttons == 0) {
+        Joueur = Vanellope
+        bouttons += 1
+        Machandelle.destroy()
+        Jouer()
+    }
+})
+function mur_en_sucre () {
+    Mur_col = Math.randomRange(0, 15)
+    Mur_row = Math.randomRange(0, 50)
+    tiles.placeOnTile(sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . b b b b b b b b b b . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+`, SpriteKind.Obstacle), tiles.getTileLocation(Mur_col, Mur_row))
+    tiles.setWallAt(tiles.getTileLocation(Mur_col, Mur_row), true)
 }
 function Choisir () {
     bouttons = 0
@@ -385,63 +456,19 @@ function Jouer () {
     for (let index = 0; index < Math.randomRange(1, 4); index++) {
         sucette()
     }
-}
-function sucette () {
-    Sucette_col = Math.randomRange(0, 15)
-    sucette_row = Math.randomRange(2, 45)
-    tiles.placeOnTile(sprites.create(sprites.food.bigIceCream, SpriteKind.Food), tiles.getTileLocation(Sucette_col, sucette_row))
-}
-controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (bouttons == 0) {
-        Joueur = Machandelle
-        bouttons += 1
-        Vanellope.destroy()
-        Jouer()
+    for (let index = 0; index <= 15; index++) {
+        arrivee(index)
     }
-})
-function mur_en_sucre () {
-    Mur_col = Math.randomRange(0, 15)
-    Mur_row = Math.randomRange(0, 50)
-    tiles.placeOnTile(sprites.create(img`
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . b b b b b b b b b b . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-. . . . . . . . . . . . . . . . 
-`, SpriteKind.Obstacle), tiles.getTileLocation(Mur_col, Mur_row))
-    tiles.setWallAt(tiles.getTileLocation(Mur_col, Mur_row), true)
 }
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
-    controller.moveSprite(sprite, 500, 500)
-    otherSprite.destroy(effects.confetti, 500)
-    pause(1000)
-    controller.moveSprite(sprite, 100, 100)
-})
-controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (bouttons == 0) {
-        Joueur = Vanellope
-        bouttons += 1
-        Machandelle.destroy()
-        Jouer()
-    }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.fin, function (sprite, otherSprite) {
+    game.over(true, effects.hearts)
 })
 let Mur_row = 0
 let Mur_col = 0
+let Vanellope: Sprite = null
+let Machandelle: Sprite = null
+let Joueur: Sprite = null
+let bouttons = 0
 let sucette_row = 0
 let Sucette_col = 0
-let Joueur: Sprite = null
-let Machandelle: Sprite = null
-let Vanellope: Sprite = null
-let bouttons = 0
 Choisir()
