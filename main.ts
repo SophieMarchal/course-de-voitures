@@ -2,6 +2,7 @@ namespace SpriteKind {
     export const Obstacle = SpriteKind.create()
     export const test = SpriteKind.create()
     export const fin = SpriteKind.create()
+    export const ennemi = SpriteKind.create()
 }
 namespace myTiles {
     //% blockIdentity=images._tile
@@ -157,6 +158,14 @@ b b b b b b b b b b b b b b b b
 b b b b b b b b b b b b b b b b 
 `
 }
+scene.onHitWall(SpriteKind.ennemi, function (sprite) {
+    if (sprite.x < 75) {
+        sprite.vx += 35
+    } else {
+        sprite.vx += -35
+    }
+    emmuree = 1
+})
 function sucette () {
     Sucette_col = Math.randomRange(0, 15)
     sucette_row = Math.randomRange(2, 45)
@@ -182,11 +191,18 @@ function arrivee (colonne: number) {
 . . . . . . . . . . . . 1 1 1 1 
 `, SpriteKind.fin), tiles.getTileLocation(colonne, 48))
 }
+scene.onOverlapTile(SpriteKind.ennemi, myTiles.tile3, function (sprite, location) {
+    if (emmuree == 1) {
+        sprite.setVelocity(0, 70)
+        emmuree = 0
+    }
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (bouttons == 0) {
         Joueur = Machandelle
         bouttons += 1
-        Vanellope.destroy()
+        Vanellope.setKind(SpriteKind.ennemi)
+        fonction2()
         Jouer()
     }
 })
@@ -199,9 +215,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (bouttons == 0) {
         Joueur = Vanellope
-        bouttons += 1
-        Machandelle.destroy()
+        bouttons += 2
+        Machandelle.setKind(SpriteKind.ennemi)
+        fonction1()
         Jouer()
+    } else if (false) {
+    	
     }
 })
 function mur_en_sucre () {
@@ -369,7 +388,7 @@ f . . . . . . 9 9 . . . . . . .
 . . . . . . . 9 9 . . . . . . . 
 . . . . . . . 9 9 . . . . . . . 
 `, SpriteKind.Player)
-    Vanellope.setPosition(25, 46)
+    Vanellope.setPosition(25, 20)
     Machandelle = sprites.create(img`
 . . . . 3 3 3 3 3 3 3 3 . . . . 
 . . . . 7 7 7 7 7 7 7 7 . . . . 
@@ -388,7 +407,10 @@ f . . . . . . 9 9 . . . . . . .
 . . . . . . . 3 3 . . . . . . . 
 . . . . . . . 3 3 . . . . . . . 
 `, SpriteKind.Player)
-    Machandelle.setPosition(125, 46)
+    Machandelle.setPosition(125, 20)
+}
+function fonction1 () {
+    Machandelle.setVelocity(1, 50)
 }
 function Jouer () {
     tiles.setTilemap(tiles.createTilemap(
@@ -460,9 +482,21 @@ function Jouer () {
         arrivee(index)
     }
 }
+sprites.onOverlap(SpriteKind.ennemi, SpriteKind.fin, function (sprite, otherSprite) {
+    game.over(false, effects.melt)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.fin, function (sprite, otherSprite) {
     game.over(true, effects.hearts)
 })
+sprites.onOverlap(SpriteKind.ennemi, SpriteKind.Food, function (sprite, otherSprite) {
+    sprite.setVelocity(60, 50)
+    otherSprite.destroy(effects.confetti, 500)
+    pause(1000)
+    sprite.setVelocity(50, 50)
+})
+function fonction2 () {
+    Vanellope.setVelocity(1, 50)
+}
 let Mur_row = 0
 let Mur_col = 0
 let Vanellope: Sprite = null
@@ -471,4 +505,6 @@ let Joueur: Sprite = null
 let bouttons = 0
 let sucette_row = 0
 let Sucette_col = 0
+let emmuree = 0
+emmuree = 0
 Choisir()
