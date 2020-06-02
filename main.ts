@@ -219,8 +219,49 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Machandelle.setKind(SpriteKind.ennemi)
         fonction1()
         Jouer()
-    } else if (false) {
-    	
+    } else if (bouttons == 2) {
+        Vanellope.setImage(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . f f f f f f f f f . . . . 
+. . . f 8 8 8 8 8 8 8 f . . . . 
+. . f f 8 f 8 8 8 f 8 f . . . . 
+f f f f 8 8 8 8 8 8 8 f . . . . 
+f . f f 8 2 2 2 2 2 8 f . . . . 
+f . . f 8 8 2 8 8 8 8 f . . . . 
+f . . . . . . 9 9 . . . . . . . 
+. . . . . . . 9 9 . . . . . . . 
+. . . 9 9 9 9 9 9 9 9 9 9 9 . . 
+. . . . . . . 9 9 . . . . . . . 
+. . . . . . . 9 9 . . . . . . . 
+. . . . . . . 9 9 . . . . . . . 
+`)
+        pause(1000)
+        if (Math.randomRange(0, 10) == 1) {
+            Vanellope.y += -20
+        } else {
+            Vanellope.y += 20
+        }
+        Vanellope.setImage(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . f f f f f f f f f . . . . 
+. . . f d d d d d d d f . . . . 
+. . f f d f d d d f d f . . . . 
+f f f f d d d d d d d f . . . . 
+f . f f d 2 2 2 2 2 d f . . . . 
+f . . f d d 2 d d d d f . . . . 
+f . . . . . . 9 9 . . . . . . . 
+. . . . . . . 9 9 . . . . . . . 
+. . . 9 9 9 9 9 9 9 9 9 9 9 . . 
+. . . . . . . 9 9 . . . . . . . 
+. . . . . . . 9 9 . . . . . . . 
+. . . . . . . 9 9 . . . . . . . 
+`)
     }
 })
 function mur_en_sucre () {
