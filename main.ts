@@ -9,14 +9,20 @@ namespace SpriteKind {
 scene.onHitWall(SpriteKind.Vanneloppe_joueur, function (sprite2, undefined) {
     Bug()
 })
+scene.onOverlapTile(SpriteKind.ennemi, assets.tile`tile3`, function (sprite42, location2) {
+    if (emmuree == 1) {
+        sprite42.setVelocity(0, 70)
+        emmuree = 0
+    }
+})
 function Machandelle_joueur () {
     Vanellope.setVelocity(0, 100)
 }
 sprites.onOverlap(SpriteKind.ennemi, SpriteKind.Food, function (sprite, otherSprite) {
-    sprite.setVelocity(60, 50)
+    sprite.setVelocity(0, 500)
     otherSprite.destroy(effects.confetti, 500)
     pause(1000)
-    sprite.setVelocity(50, 50)
+    sprite.setVelocity(0, 100)
 })
 function sucette () {
     Sucette_col = randint(1, 5)
@@ -76,6 +82,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onHitWall(SpriteKind.Vanneloppe_ennemi, function (sprite9, undefined3) {
     Bug()
     Vanellope.setVelocity(0, 50)
+})
+sprites.onOverlap(SpriteKind.Vanneloppe_joueur, SpriteKind.fin, function (sprite72, otherSprite52) {
+    game.over(true, effects.bubbles)
 })
 scene.onOverlapTile(SpriteKind.ennemi, assets.tile`tile4`, function (sprite4, location) {
     if (emmuree == 1) {
@@ -163,14 +172,12 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             vitesse += 10
             controller.moveSprite(Joueur, vitesse, vitesse)
         }
+    } else if (randint(1, 3) == 3) {
+        vitesse += -10
+        controller.moveSprite(Vanellope, vitesse, vitesse)
     } else {
-        if (randint(1, 3) == 3) {
-            vitesse += -10
-            controller.moveSprite(Vanellope, vitesse, vitesse)
-        } else {
-            vitesse += 10
-            controller.moveSprite(Vanellope, vitesse, vitesse)
-        }
+        vitesse += 10
+        controller.moveSprite(Vanellope, vitesse, vitesse)
     }
 })
 function mur_en_sucre () {
@@ -226,34 +233,25 @@ function Jouer () {
     tiles.setTilemap(tilemap`niveau1`)
     controller.moveSprite(Joueur, vitesse, vitesse)
     scene.cameraFollowSprite(Joueur)
-    for (let index = 0; index < randint(0, 0); index++) {
+    for (let index = 0; index < randint(5, 15); index++) {
         mur_en_sucre()
     }
     for (let index = 0; index < randint(1, 4); index++) {
         sucette()
     }
-    for (let index3 = 0; index3 <= 15; index3++) {
-        arrivee(index3)
+    for (let index32 = 0; index32 <= 15; index32++) {
+        arrivee(index32)
     }
     Machandelle.setPosition(54, 20)
 }
 sprites.onOverlap(SpriteKind.Vanneloppe_ennemi, SpriteKind.fin, function (sprite10, otherSprite6) {
     game.over(false, effects.melt)
 })
-scene.onOverlapTile(SpriteKind.ennemi, assets.tile`tile3`, function (sprite4, location) {
-    if (emmuree == 1) {
-        sprite4.setVelocity(0, 70)
-        emmuree = 0
-    }
-})
 sprites.onOverlap(SpriteKind.Vanneloppe_ennemi, SpriteKind.Food, function (sprite5, otherSprite3) {
-    controller.moveSprite(sprite5, 500, 500)
+    Vanellope.setVelocity(0, 500)
     otherSprite3.destroy(effects.confetti, 500)
     pause(100)
-    controller.moveSprite(sprite5, 100, 100)
-})
-sprites.onOverlap(SpriteKind.Vanneloppe_joueur, SpriteKind.fin, function (sprite7, otherSprite5) {
-    game.over(true, effects.bubbles)
+    Vanellope.setVelocity(0, 100)
 })
 let Mur_row = 0
 let Mur_col = 0

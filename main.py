@@ -11,8 +11,19 @@ def on_hit_wall(sprite2, undefined):
     Bug()
 scene.on_hit_wall(SpriteKind.Vanneloppe_joueur, on_hit_wall)
 
+def on_overlap_tile(sprite42, location2):
+    global emmuree
+    if emmuree == 1:
+        sprite42.set_velocity(0, 70)
+        emmuree = 0
+scene.on_overlap_tile(SpriteKind.ennemi,
+    assets.tile("""
+        tile3
+    """),
+    on_overlap_tile)
+
 def Machandelle_joueur():
-    Vanellope.set_velocity(0, 55)
+    Vanellope.set_velocity(0, 100)
 
 def on_on_overlap(sprite, otherSprite):
     sprite.set_velocity(60, 50)
@@ -23,8 +34,8 @@ sprites.on_overlap(SpriteKind.ennemi, SpriteKind.food, on_on_overlap)
 
 def sucette():
     global Sucette_col, sucette_row
-    Sucette_col = randint(0, 15)
-    sucette_row = randint(2, 45)
+    Sucette_col = randint(1, 5)
+    sucette_row = randint(5, 45)
     tiles.place_on_tile(sprites.create(sprites.food.big_ice_cream, SpriteKind.food),
         tiles.get_tile_location(Sucette_col, sucette_row))
 
@@ -92,7 +103,11 @@ def on_hit_wall2(sprite9, undefined3):
     Vanellope.set_velocity(0, 50)
 scene.on_hit_wall(SpriteKind.Vanneloppe_ennemi, on_hit_wall2)
 
-def on_overlap_tile(sprite4, location):
+def on_on_overlap6(sprite72, otherSprite52):
+    game.over(True, effects.bubbles)
+sprites.on_overlap(SpriteKind.Vanneloppe_joueur, SpriteKind.fin, on_on_overlap6)
+
+def on_overlap_tile2(sprite4, location):
     global emmuree
     if emmuree == 1:
         sprite4.set_velocity(0, 70)
@@ -101,7 +116,7 @@ scene.on_overlap_tile(SpriteKind.ennemi,
     assets.tile("""
         tile4
     """),
-    on_overlap_tile)
+    on_overlap_tile2)
 
 def on_hit_wall3(sprite8, undefined2):
     global emmuree
@@ -119,25 +134,25 @@ def on_hit_wall3(sprite8, undefined2):
 scene.on_hit_wall(SpriteKind.ennemi, on_hit_wall3)
 
 def Vanelloppe_joueur():
-    Machandelle.set_velocity(0, 56)
+    Machandelle.set_velocity(0, 100)
 def Bug():
     Vanellope.set_image(img("""
-        . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . f f f f f f f f f . . . . 
-                . . . f 9 9 9 9 9 9 9 f . . . . 
-                . . f f 9 f 9 9 9 f 9 f . . . . 
-                f f f f 9 9 9 9 9 9 9 f . . . . 
-                f . f f 9 2 2 2 2 2 9 f . . . . 
-                f . . f 9 9 2 9 9 9 9 f . . . . 
-                f . . . . . . 9 9 . . . . . . . 
-                . . . . . . . 9 9 . . . . . . . 
-                . . . 9 9 9 9 9 9 9 9 9 9 9 . . 
-                . . . . . . . 9 9 . . . . . . . 
-                . . . . . . . 9 9 . . . . . . . 
-                . . . . . . . 9 9 . . . . . . .
+        f f f . . . . . . . . . . . 
+                f f f f . . . . . . . . . . 
+                f . f 3 f f f f f f . . . . 
+                . . 3 f f f f f f f f . . . 
+                . . f f f f f f f f f f . . 
+                . . f f f f f f f f f f . . 
+                . . f f 8 8 8 8 8 8 f f . . 
+                . . f 8 8 e 8 8 e 8 8 f . . 
+                . . f f 1 e 8 8 e 1 f f . . 
+                . . . . 8 8 8 8 8 8 . . . . 
+                . . 9 9 9 9 9 9 9 9 9 9 . . 
+                . . 9 . 9 9 9 9 9 9 . 9 . . 
+                . . 9 . 9 9 9 9 9 9 . 9 . . 
+                . . 9 . e e e e e e . 9 . . 
+                . . . . 9 9 9 9 9 9 . . . . 
+                . . . . f f . . f f . . . .
     """))
     pause(50)
     if randint(0, 100) == 1:
@@ -146,32 +161,45 @@ def Bug():
         Vanellope.y += 30
     pause(50)
     Vanellope.set_image(img("""
-        . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . f f f f f f f f f . . . . 
-                . . . f d d d d d d d f . . . . 
-                . . f f d f d d d f d f . . . . 
-                f f f f d d d d d d d f . . . . 
-                f . f f d 2 2 2 2 2 d f . . . . 
-                f . . f d d 2 d d d d f . . . . 
-                f . . . . . . 9 9 . . . . . . . 
-                . . . . . . . 9 9 . . . . . . . 
-                . . . 9 9 9 9 9 9 9 9 9 9 9 . . 
-                . . . . . . . 9 9 . . . . . . . 
-                . . . . . . . 9 9 . . . . . . . 
-                . . . . . . . 9 9 . . . . . . .
+        f f f . . . . . . . . . . . 
+                f f f f . . . . . . . . . . 
+                f . f 3 f f f f f f . . . . 
+                . . 3 f f f f f f f f . . . 
+                . . f f f f f f f f f f . . 
+                . . f f f f f f f f f f . . 
+                . . f f d d d d d d f f . . 
+                . . f d d e d d e d d f . . 
+                . . f f 1 e d d e 1 f f . . 
+                . . . . d d d d d d . . . . 
+                . . 9 9 9 9 9 9 9 9 9 9 . . 
+                . . 9 . 9 9 9 9 9 9 . 9 . . 
+                . . 9 . 9 9 9 9 9 9 . 9 . . 
+                . . 9 . e e e e e e . 9 . . 
+                . . . . 9 9 9 9 9 9 . . . . 
+                . . . . f f . . f f . . . .
     """))
 
 def on_b_pressed():
-    global Joueur, bouttons
+    global Joueur, bouttons, vitesse
     if bouttons == 0:
         Joueur = Machandelle
         bouttons += 1
         Vanellope.set_kind(SpriteKind.Vanneloppe_ennemi)
         Machandelle_joueur()
         Jouer()
+    elif bouttons == 1:
+        if randint(1, 3) == 3:
+            vitesse += -10
+            controller.move_sprite(Joueur, vitesse, vitesse)
+        else:
+            vitesse += 10
+            controller.move_sprite(Joueur, vitesse, vitesse)
+    elif randint(1, 3) == 3:
+        vitesse += -10
+        controller.move_sprite(Vanellope, vitesse, vitesse)
+    else:
+        vitesse += 10
+        controller.move_sprite(Vanellope, vitesse, vitesse)
 controller.B.on_event(ControllerButtonEvent.PRESSED, on_b_pressed)
 
 def mur_en_sucre():
@@ -184,95 +212,82 @@ def mur_en_sucre():
         tiles.get_tile_location(Mur_col, Mur_row))
     tiles.set_wall_at(tiles.get_tile_location(Mur_col, Mur_row), True)
 def Choisir():
-    global bouttons, Vanellope, Machandelle
+    global bouttons, Vanellope, Machandelle, vitesse
     bouttons = 0
     scene.set_background_image(assets.image("""
         mediumShell
     """))
     Vanellope = sprites.create(img("""
-            . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . f f f f f f f f f . . . . 
-                    . . . f d d d d d d d f . . . . 
-                    . . f f d f d d d f d f . . . . 
-                    f f f f d d d d d d d f . . . . 
-                    f . f f d 2 2 2 2 2 d f . . . . 
-                    f . . f d d 2 d d d d f . . . . 
-                    f . . . . . . 9 9 . . . . . . . 
-                    . . . . . . . 9 9 . . . . . . . 
-                    . . . 9 9 9 9 9 9 9 9 9 9 9 . . 
-                    . . . . . . . 9 9 . . . . . . . 
-                    . . . . . . . 9 9 . . . . . . . 
-                    . . . . . . . 9 9 . . . . . . .
+            f f f . . . . . . . . . . . 
+                    f f f f . . . . . . . . . . 
+                    f . f 3 f f f f f f . . . . 
+                    . . 3 f f f f f f f f . . . 
+                    . . f f f f f f f f f f . . 
+                    . . f f f f f f f f f f . . 
+                    . . f f d d d d d d f f . . 
+                    . . f d d e d d e d d f . . 
+                    . . f f 1 e d d e 1 f f . . 
+                    . . . . d d d d d d . . . . 
+                    . . 9 9 9 9 9 9 9 9 9 9 . . 
+                    . . 9 . 9 9 9 9 9 9 . 9 . . 
+                    . . 9 . 9 9 9 9 9 9 . 9 . . 
+                    . . 9 . e e e e e e . 9 . . 
+                    . . . . 9 9 9 9 9 9 . . . . 
+                    . . . . f f . . f f . . . .
         """),
         SpriteKind.player)
     Vanellope.set_position(25, 20)
     Machandelle = sprites.create(img("""
-            . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . . . . . . . . . . . . . . 
-                    . . . 7 7 7 7 7 7 7 7 7 . . . . 
-                    . . . 7 d d d d d d d 7 . . . . 
-                    . . 7 7 d f d d d f d 7 . . . . 
-                    7 7 7 7 d d d d d d d 7 . . . . 
-                    7 . 7 7 d 2 2 2 2 2 d 7 . . . . 
-                    7 . . 7 d d 2 d d d d 7 . . . . 
-                    7 . . . . . . 3 3 . . . . . . . 
-                    . . . . . . . 3 3 . . . . . . . 
-                    . . . 3 3 3 3 3 3 3 3 3 3 3 . . 
-                    . . . . . . . 3 3 . . . . . . . 
-                    . . . . . . . 3 3 . . . . . . . 
-                    . . . . . . . 3 3 . . . . . . .
+            . . . . . . 5 5 . . . . . . 
+                    . . . . 3 3 3 3 3 3 . . . . 
+                    . . . 3 3 3 3 3 3 3 3 . . . 
+                    . . 3 3 3 3 3 3 3 3 3 3 . . 
+                    . . e e e e e e e e e e . . 
+                    . . 7 7 7 7 7 7 7 7 7 7 . . 
+                    . . 7 7 d d d d d d 7 7 . . 
+                    . . 3 3 d 7 d d 7 d 3 3 . . 
+                    . 7 7 . 1 f d d f 1 . 7 7 . 
+                    7 . 7 . d d d d d d . 7 . 7 
+                    . . 3 3 3 3 3 3 3 3 3 3 . . 
+                    . . 3 . 3 3 3 3 3 3 . 3 . . 
+                    . . 3 . 3 3 3 3 3 3 . 3 . . 
+                    . . 3 . 3 3 3 3 3 3 . 3 . . 
+                    . . . . e e e e e e . . . . 
+                    . . . . f f . . f f . . . .
         """),
         SpriteKind.player)
     Machandelle.set_position(120, 20)
+    vitesse = 100
 def Jouer():
     tiles.set_tilemap(tilemap("""
         niveau1
     """))
-    controller.move_sprite(Joueur, 100, 100)
+    controller.move_sprite(Joueur, vitesse, vitesse)
     scene.camera_follow_sprite(Joueur)
-    for index3 in range(randint(5, 15)):
+    for index3 in range(randint(0, 0)):
         mur_en_sucre()
     for index4 in range(randint(1, 4)):
         sucette()
     for index32 in range(16):
         arrivee(index32)
-    Machandelle.set_position(160, 20)
+    Machandelle.set_position(54, 20)
 
-def on_on_overlap6(sprite10, otherSprite6):
+def on_on_overlap7(sprite10, otherSprite6):
     game.over(False, effects.melt)
-sprites.on_overlap(SpriteKind.Vanneloppe_ennemi, SpriteKind.fin, on_on_overlap6)
+sprites.on_overlap(SpriteKind.Vanneloppe_ennemi, SpriteKind.fin, on_on_overlap7)
 
-def on_overlap_tile2(sprite42, location2):
-    global emmuree
-    if emmuree == 1:
-        sprite42.set_velocity(0, 70)
-        emmuree = 0
-scene.on_overlap_tile(SpriteKind.ennemi,
-    assets.tile("""
-        tile3
-    """),
-    on_overlap_tile2)
-
-def on_on_overlap7(sprite5, otherSprite3):
+def on_on_overlap8(sprite5, otherSprite3):
     controller.move_sprite(sprite5, 500, 500)
     otherSprite3.destroy(effects.confetti, 500)
     pause(100)
     controller.move_sprite(sprite5, 100, 100)
 sprites.on_overlap(SpriteKind.Vanneloppe_ennemi,
     SpriteKind.food,
-    on_on_overlap7)
-
-def on_on_overlap8(sprite72, otherSprite52):
-    game.over(True, effects.bubbles)
-sprites.on_overlap(SpriteKind.Vanneloppe_joueur, SpriteKind.fin, on_on_overlap8)
+    on_on_overlap8)
 
 Mur_row = 0
 Mur_col = 0
+vitesse = 0
 Machandelle: Sprite = None
 Joueur: Sprite = None
 bouttons = 0
