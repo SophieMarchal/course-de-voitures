@@ -157,12 +157,16 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         Jouer()
     } else if (bouttons == 1) {
         if (randint(1, 3) == 3) {
-            controller.moveSprite(Joueur, vitesse + 5, vitesse + 5)
+            controller.moveSprite(Joueur, vitesse - 5, vitesse - 5)
         } else {
-        	
+            controller.moveSprite(Joueur, vitesse - 5, vitesse - 5)
         }
     } else {
-        controller.moveSprite(Vanellope, vitesse + 5, vitesse + 5)
+        if (randint(1, 3) == 3) {
+            controller.moveSprite(Joueur, vitesse - 5, vitesse - 5)
+        } else {
+            controller.moveSprite(Joueur, vitesse - 5, vitesse - 5)
+        }
     }
 })
 function mur_en_sucre () {
