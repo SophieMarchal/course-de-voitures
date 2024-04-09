@@ -19,8 +19,8 @@ sprites.onOverlap(SpriteKind.ennemi, SpriteKind.Food, function (sprite, otherSpr
     sprite.setVelocity(50, 50)
 })
 function sucette () {
-    Sucette_col = randint(0, 0)
-    sucette_row = randint(0, 0)
+    Sucette_col = randint(1, 5)
+    sucette_row = randint(5, 45)
     tiles.placeOnTile(sprites.create(sprites.food.bigIceCream, SpriteKind.Food), tiles.getTileLocation(Sucette_col, sucette_row))
 }
 sprites.onOverlap(SpriteKind.Vanneloppe_joueur, SpriteKind.Food, function (sprite3, otherSprite2) {
@@ -157,15 +157,19 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         Jouer()
     } else if (bouttons == 1) {
         if (randint(1, 3) == 3) {
-            controller.moveSprite(Joueur, vitesse - 5, vitesse - 5)
+            vitesse += -10
+            controller.moveSprite(Joueur, vitesse, vitesse)
         } else {
-            controller.moveSprite(Joueur, vitesse - 5, vitesse - 5)
+            vitesse += 10
+            controller.moveSprite(Joueur, vitesse, vitesse)
         }
     } else {
         if (randint(1, 3) == 3) {
-            controller.moveSprite(Vanellope, vitesse - 5, vitesse - 5)
+            vitesse += -10
+            controller.moveSprite(Vanellope, vitesse, vitesse)
         } else {
-            controller.moveSprite(Vanellope, vitesse - 5, vitesse - 5)
+            vitesse += 10
+            controller.moveSprite(Vanellope, vitesse, vitesse)
         }
     }
 })
