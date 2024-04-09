@@ -156,7 +156,13 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         Machandelle_joueur()
         Jouer()
     } else if (bouttons == 1) {
-        controller.moveSprite(Joueur, vitesse + 100, vitesse + 100)
+        if (randint(1, 3) == 3) {
+            controller.moveSprite(Joueur, vitesse + 5, vitesse + 5)
+        } else {
+        	
+        }
+    } else {
+        controller.moveSprite(Vanellope, vitesse + 5, vitesse + 5)
     }
 })
 function mur_en_sucre () {
