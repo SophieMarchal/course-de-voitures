@@ -26,10 +26,10 @@ def Machandelle_joueur():
     Vanellope.set_velocity(0, 100)
 
 def on_on_overlap(sprite, otherSprite):
-    sprite.set_velocity(60, 50)
+    sprite.set_velocity(0, 500)
     otherSprite.destroy(effects.confetti, 500)
     pause(1000)
-    sprite.set_velocity(50, 50)
+    sprite.set_velocity(0, 100)
 sprites.on_overlap(SpriteKind.ennemi, SpriteKind.food, on_on_overlap)
 
 def sucette():
@@ -264,7 +264,7 @@ def Jouer():
     """))
     controller.move_sprite(Joueur, vitesse, vitesse)
     scene.camera_follow_sprite(Joueur)
-    for index3 in range(randint(0, 0)):
+    for index3 in range(randint(5, 15)):
         mur_en_sucre()
     for index4 in range(randint(1, 4)):
         sucette()
@@ -277,10 +277,10 @@ def on_on_overlap7(sprite10, otherSprite6):
 sprites.on_overlap(SpriteKind.Vanneloppe_ennemi, SpriteKind.fin, on_on_overlap7)
 
 def on_on_overlap8(sprite5, otherSprite3):
-    controller.move_sprite(sprite5, 500, 500)
+    Vanellope.set_velocity(0, 500)
     otherSprite3.destroy(effects.confetti, 500)
     pause(100)
-    controller.move_sprite(sprite5, 100, 100)
+    Vanellope.set_velocity(0, 100)
 sprites.on_overlap(SpriteKind.Vanneloppe_ennemi,
     SpriteKind.food,
     on_on_overlap8)

@@ -94,11 +94,11 @@ scene.onOverlapTile(SpriteKind.ennemi, assets.tile`tile4`, function (sprite4, lo
 })
 scene.onHitWall(SpriteKind.ennemi, function (sprite8, undefined2) {
     if (sprite8.x < 75) {
-        for (let index = 0; index < 20; index++) {
+        for (let index = 0; index < 30; index++) {
             sprite8.x += 1
         }
     } else {
-        for (let index = 0; index < 20; index++) {
+        for (let index = 0; index < 30; index++) {
             sprite8.x += -1
         }
     }
@@ -226,14 +226,14 @@ function Choisir () {
         . . . . e e e e e e . . . . 
         . . . . f f . . f f . . . . 
         `, SpriteKind.Player)
-    Machandelle.setPosition(120, 20)
+    Machandelle.setPosition(114, 20)
     vitesse = 100
 }
 function Jouer () {
     tiles.setTilemap(tilemap`niveau1`)
     controller.moveSprite(Joueur, vitesse, vitesse)
     scene.cameraFollowSprite(Joueur)
-    for (let index = 0; index < randint(5, 15); index++) {
+    for (let index = 0; index < randint(10, 20); index++) {
         mur_en_sucre()
     }
     for (let index = 0; index < randint(1, 4); index++) {
@@ -242,7 +242,7 @@ function Jouer () {
     for (let index32 = 0; index32 <= 15; index32++) {
         arrivee(index32)
     }
-    Machandelle.setPosition(54, 20)
+    Machandelle.setPosition(160, 20)
 }
 sprites.onOverlap(SpriteKind.Vanneloppe_ennemi, SpriteKind.fin, function (sprite10, otherSprite6) {
     game.over(false, effects.melt)
